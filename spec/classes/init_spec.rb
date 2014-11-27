@@ -11,6 +11,22 @@ describe 'keymaster', :type => :class do
     end
     describe 'with no parameters' do
       it { should contain_class('keymaster::params') }
+      it { should contain_file('key_store_base').with(
+        'ensure'  => 'directory',
+        'path'    => '/var/lib/keymaster',
+        'owner'   => 'puppet',
+        'group'   => 'puppet',
+        'recurse' => true,
+        'mode'    => '0640'
+      ) }
+      it { should contain_file('key_store_openssh').with(
+        'ensure'  => 'directory',
+        'path'    => '/var/lib/keymaster/openssh',
+        'owner'   => 'puppet',
+        'group'   => 'puppet',
+        'recurse' => true,
+        'mode'    => '0640'
+      ) }
     end
   end
 

@@ -13,6 +13,10 @@
 # [Remember: No empty lines between comments and class definition]
 class keymaster::params {
 
+  $keystore_base    = '/var/lib/keymaster'
+  $keystore_openssh = "${keystore_base}/openssh"
+  $user             = 'puppet'
+
   case $::osfamily {
     Debian:{
       # Do nothing
