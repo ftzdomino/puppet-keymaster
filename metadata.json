@@ -1,0 +1,21 @@
+{
+  "name": "Aethylred-keymaster",
+  "version": "0.0.1",
+  "author": "Aethylred",
+  "license": "Apache 2.0",
+  "summary": "A module for installing and managing keymaster",
+  "source": "https://github.com/Aethylred/keymaster",
+  "project_page": "https://github.com/Aethylred/keymaster",
+  "issues_url": "https://github.com/Aethylred/keymaster/issues",
+  "tags": ["keymaster"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "12.04", "13.10" ]
+    }
+   ],
+  "dependencies": [
+    // { "name": "puppetlabs/stdlib",  "version_requirement": ">=4.2.0 <5.0.0" },
+    // { "name": "puppetlabs/apache",  "version_requirement": "1.0.1" },
+  ] 
+}
