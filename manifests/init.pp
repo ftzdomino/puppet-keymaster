@@ -42,6 +42,6 @@ class keymaster (
   }
 
   # Collect all keys
-  # Keymaster::Openssh::keys <<| |>>
+  Keymaster::Openssh::Key::Generate <<| |>>
 
 }

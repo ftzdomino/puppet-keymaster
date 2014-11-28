@@ -16,6 +16,7 @@ class keymaster::params {
   $keystore_base    = '/var/lib/keymaster'
   $keystore_openssh = "${keystore_base}/openssh"
   $user             = 'puppet'
+  $group            = 'puppet'
 
   case $::osfamily {
     Debian:{
