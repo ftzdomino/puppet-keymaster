@@ -13,17 +13,17 @@ define keymaster::openssh::key (
   validate_re($keytype, ['^rsa$','^dsa$'])
 
   if $filename {
-    $_filename = $filename
+    $real_filename = $filename
   } else {
-    $_filename = "id_${keytype}"
+    $real_filename = "id_${keytype}"
   }
 
   case $keytype {
     'dsa':{
-      $_length = '1024'
+      $real_length = '1024'
     }
     default:{
-      $_length = $length
+      $real_length = $length
     }
   }
 
@@ -40,7 +40,7 @@ define keymaster::openssh::key (
     ensure  => $ensure,
     force   => $force,
     keytype => $keytype,
-    length  => $_length,
+    length  => $real_length,
     maxdays => $maxdays,
     mindate => $mindate,
     tag     => $tag,
@@ -49,7 +49,7 @@ define keymaster::openssh::key (
   # generate exported resources for the ssh client host to realize
   @@keymaster::openssh::key::deploy { $name:
     ensure   => $ensure,
-    filename => $_filename,
+    filename => $real_filename,
     tag      => $tag,
   }
 

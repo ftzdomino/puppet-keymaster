@@ -9,7 +9,7 @@ describe 'keymaster::openssh::key::generate', :type => :define do
         :fqdn                   => 'test.example.org',
       }
     end
-    describe 'with default gitlab' do
+    describe 'with default keymaster' do
       let :pre_condition do
         "include keymaster"
       end
@@ -19,34 +19,64 @@ describe 'keymaster::openssh::key::generate', :type => :define do
         end
         it { should contain_file('user@test.example.org_dir').with(
           'ensure' => 'directory',
-          'path'   => '/var/lib/keymaster/openssh/user_at_test.example.org',
+          'path'   => '/var/lib/keymaster/openssh/user@test.example.org',
           'mode'   => '0644',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
         it { should contain_file('user@test.example.org_key').with(
           'ensure' => 'present',
-          'path'   => '/var/lib/keymaster/openssh/user_at_test.example.org/key',
+          'path'   => '/var/lib/keymaster/openssh/user@test.example.org/key',
           'mode'   => '0600',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
         it { should contain_file('user@test.example.org_pub').with(
           'ensure' => 'present',
-          'path'   => '/var/lib/keymaster/openssh/user_at_test.example.org/key.pub',
+          'path'   => '/var/lib/keymaster/openssh/user@test.example.org/key.pub',
           'mode'   => '0600',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
         it { should contain_exec('Create key user@test.example.org: rsa, 2048 bits').with(
-          'command' => "ssh-keygen -t rsa -b 2048 -f /var/lib/keymaster/openssh/user_at_test.example.org/key -C 'user@test.example.org' -N ''",
+          'command' => 'ssh-keygen -t rsa -b 2048 -f /var/lib/keymaster/openssh/user@test.example.org/key -C \'rsa 2048\' -N \'\'',
           'user'    => 'puppet',
           'group'   => 'puppet',
-          'creates' => '/var/lib/keymaster/openssh/user_at_test.example.org/key',
+          'creates' => '/var/lib/keymaster/openssh/user@test.example.org/key',
           'before'  => [ 'File[user@test.example.org_key]', 'File[user@test.example.org_pup]' ],
           'require' => 'File[user@test.example.org_dir]'
         ) }
+        it { should_not contain_exec('Revoke previous key user@test.example.org: force=true') }
       end
+      describe 'when specifying a DSA key' do
+        let :title do
+          'user@test.example.org'
+        end
+        let :params do
+          {
+            :keytype => 'dsa',
+            :length  => '4096'
+          }
+        end
+        it { should contain_exec('Create key user@test.example.org: dsa, 1024 bits').with(
+          'command' => "ssh-keygen -t dsa -b 1024 -f /var/lib/keymaster/openssh/user@test.example.org/key -C 'dsa 1024' -N ''"
+        ) }
+      end
+      describe 'when forcing key replacement' do
+        let :title do
+          'user@test.example.org'
+        end
+        let :params do
+          {
+            :force => true
+          }
+        end
+        it { should contain_exec('Revoke previous key user@test.example.org: force=true').with(
+          'command' => "rm /var/lib/keymaster/openssh/user@test.example.org/key /var/lib/keymaster/openssh/user@test.example.org/key.pub",
+          'before'  => 'Exec[Create key user@test.example.org: rsa, 2048 bits]'
+        ) }
+      end
+      # There should be tests for maxage and mindate, which require fiddling about with fixtures
     end
   end
 end

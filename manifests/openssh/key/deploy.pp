@@ -45,7 +45,7 @@ define keymaster::openssh::key::deploy (
     # create client user's .ssh file if defined already
     if ! defined(File[ "${home}/.ssh" ]) {
       file { "${home}/.ssh":
-        ensure => directory,
+        ensure => 'directory',
         owner  => $user,
         group  => $group,
         mode   => '0700',
@@ -53,6 +53,7 @@ define keymaster::openssh::key::deploy (
     }
 
     file { $key_tgt_file:
+      ensure  => 'file',
       content => file($key_src_file, '/dev/null'),
       owner   => $user,
       group   => $group,
@@ -61,6 +62,7 @@ define keymaster::openssh::key::deploy (
     }
     
     file { "${key_tgt_file}.pub":
+      ensure  => 'file',
       content => "${keytype} ${modulus} ${name}\n",
       owner   => $user,
       group   => $group,

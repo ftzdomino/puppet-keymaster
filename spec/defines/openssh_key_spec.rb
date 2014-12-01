@@ -9,7 +9,7 @@ describe 'keymaster::openssh::key', :type => :define do
         :fqdn                   => 'test.example.org',
       }
     end
-    describe 'with default gitlab' do
+    describe 'with default keymaster and realising stored resources' do
       let :pre_condition do
         "include keymaster\nKeymaster::Openssh::Key::Generate <| |>\nKeymaster::Openssh::Key::Deploy <| |> { user => 'tester' }\nKeymaster::Openssh::Key::Authorized_key <| |> { user => 'tester' }"
       end

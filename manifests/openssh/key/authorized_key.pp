@@ -32,7 +32,7 @@ define keymaster::openssh::key::authorized_key (
     $modulus = $2
 
     ssh_authorized_key { $name:
-      ensure  => present,
+      ensure  => 'present',
       user    => $user,
       type    => $keytype,
       key     => $modulus,

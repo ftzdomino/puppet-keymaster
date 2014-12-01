@@ -1,7 +1,6 @@
 # Manages the creation, generation, and deletion of keys on the keymaster
 define keymaster::openssh::key::generate (
   $ensure  = 'present',
-  $comment = $name,
   $force   = false,
   $keytype = 'rsa',
   $length  = '2048',
@@ -11,6 +10,12 @@ define keymaster::openssh::key::generate (
 
   validate_re($keytype, ['^rsa$','^dsa$'])
 
+  if $keytype == 'dsa' {
+    $real_length = '1024'
+  } else {
+    $real_length = $length
+  }
+
   Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
   File {
@@ -19,10 +24,8 @@ define keymaster::openssh::key::generate (
     mode  => '0600',
   }
 
-  $clean_name = regsubst($name, '@', '_at_')
-
-  $keydir  = "${::keymaster::keystore_openssh}/${clean_name}"
-  $keyfile = "${keydir}/key"
+  $keydir     = "${::keymaster::keystore_openssh}/${name}"
+  $keyfile    = "${keydir}/key"
 
   file { "${name}_dir":
     ensure => directory,
@@ -82,8 +85,8 @@ define keymaster::openssh::key::generate (
     # store data about the key, i.e. $keytype and $length.  This avoids
     # having to rerun ssh-keygen -l on every key at every run to determine
     # the key length.
-    exec { "Create key ${name}: ${keytype}, ${length} bits":
-      command => "ssh-keygen -t ${keytype} -b ${length} -f ${keyfile} -C '${comment}' -N ''",
+    exec { "Create key ${name}: ${keytype}, ${real_length} bits":
+      command => "ssh-keygen -t ${keytype} -b ${real_length} -f ${keyfile} -C '${keytype} ${real_length}' -N ''",
       user    => $::keymaster::user,
       group   => $::keymaster::group,
       creates => $keyfile,
