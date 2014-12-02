@@ -9,29 +9,37 @@ describe 'keymaster::openssh::key::authorized_key', :type => :define do
         :fqdn                   => 'test.example.org',
       }
     end
+    def with_keyfile
+      File.stubs(:exists).with('/var/lib/keymaster/openssh/tester_at_test.example.org/key.pub').returns(true)
+      File.stubs(:read).with('/var/lib/keymaster/openssh/tester_at_test.example.org/key.pub').returns('rsa test foo@baa')
+      File.stubs(:binread).with('/var/lib/keymaster/openssh/tester_at_test.example.org/key.pub').returns('rsa test foo@baa')
+    end
     describe 'with default keymaster' do
       let :pre_condition do
-        "include keymaster\nuser{'tester': home => '/home/tester}"
+        "include keymaster\nuser{'tester': home => '/home/tester'}"
       end
       describe 'with minimum parameters' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
             :user   => 'tester'
           }
         end
-        # some parameters (type and key) can not be tested without fixtures in place
-        it { should contain_ssh_authorized_key('user@test.example.org').with(
-          'ensure'  => 'present',
-          'user'    => 'tester'
-        ) }
-        it { should contain_ssh_authorized_key('user@test.example.org').without('options') }
+        it 'should retrieve contents from stored public key' do
+          with_keyfile do
+            should contain_ssh_authorized_key('tester@test.example.org').with(
+              'ensure'  => 'present',
+              'user'    => 'tester'
+            )
+            should contain_ssh_authorized_key('tester@test.example.org').without('options')
+          end
+        end
       end
       describe 'when setting options' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -40,13 +48,17 @@ describe 'keymaster::openssh::key::authorized_key', :type => :define do
           }
         end
         # some parameters (type and key) can not be tested without fixtures in place
-        it { should contain_ssh_authorized_key('user@test.example.org').with(
-          'options' => '--these --are --options'
-        ) }
+        it 'should retrieve contents from stored public key' do
+          with_keyfile do
+            should contain_ssh_authorized_key('tester@test.example.org').with(
+              'options' => '--these --are --options'
+            )
+          end
+        end
       end
       describe 'when ensure is absent' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -54,7 +66,7 @@ describe 'keymaster::openssh::key::authorized_key', :type => :define do
             :ensure => 'absent'
           }
         end
-        it { should contain_ssh_authorized_key('user@test.example.org').with_ensure('absent')}
+        it { should contain_ssh_authorized_key('tester@test.example.org').with_ensure('absent')}
       end
     end
   end

@@ -6,7 +6,8 @@ define keymaster::openssh::key::authorized_key (
 ) {
 
   # on the keymaster:
-  $key_src_dir  = "${::keymaster::keystore_openssh}/${name}"
+  $clean_name = regsubst($name, '@', '_at_')
+  $key_src_dir  = "${::keymaster::keystore_openssh}/${clean_name}"
   $key_src_file = "${key_src_dir}/key.pub"
   $key_src_content = file($key_src_file, '/dev/null')
 
@@ -19,12 +20,11 @@ define keymaster::openssh::key::authorized_key (
 
   # If no key content, do nothing.  wait for keymaster to realise key resource
   } elsif ! $key_src_content {
-    notify { "Public key file ${key_src_file} for key ${name} not found on keymaster; skipping": }
+    fail("Public key file ${key_src_file} for key ${name} not found on keymaster")
 
   # Make sure key content parses
   } elsif $key_src_content !~ /^(ssh-...) ([^ ]*)/ {
-    err("Can't parse public key file ${key_src_file}")
-    notify { "Can't parse public key file ${key_src_file} for key ${name} on the keymaster: skipping": }
+    fail("Can't parse public key file ${key_src_file} for key ${name} on keymaster")
 
   # All's good.  install the pubkey.
   } else {

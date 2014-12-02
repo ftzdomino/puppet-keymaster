@@ -11,12 +11,12 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
     end
     describe 'with default keymaster' do
       let :pre_condition do
-        "include keymaster\nuser{'tester': home => '/home/tester}"
+        "include keymaster\nuser{'tester': home => '/home/tester'}"
       end
       describe 'with minumum parameters' do
         # These will most likely fail without fixtures set up
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -50,7 +50,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
       describe 'when ensure is absent' do
         # These will most likely fail without fixtures set up
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -72,7 +72,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
       end
       describe 'when key source files not present' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {

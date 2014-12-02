@@ -15,33 +15,33 @@ describe 'keymaster::openssh::key', :type => :define do
       end
       describe 'with no parameters' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').with(
           'ensure'  => 'present',
           'force'   => false,
           'keytype' => 'rsa',
           'length'  => '2048',
           'tag'     => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').without(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'maxdays') }
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').without(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'mindate') }
-        it { should contain_keymaster__openssh__key__deploy('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'id_rsa',
           'tag'      => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__authorized_key('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
           'tag'      => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__authorized_key('user@test.example.org').without( 'options' ) }
+        it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').without( 'options' ) }
       end
       describe 'when specifying a DSA key' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -49,31 +49,31 @@ describe 'keymaster::openssh::key', :type => :define do
             :length  => '4096'
           }
         end
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').with(
           'ensure'  => 'present',
           'force'   => false,
           'keytype' => 'dsa',
           'length'  => '1024',
           'tag'     => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').without(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'maxdays') }
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').without(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'mindate') }
-        it { should contain_keymaster__openssh__key__deploy('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'id_dsa',
           'tag'      => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__authorized_key('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
           'tag'      => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__authorized_key('user@test.example.org').without( 'options' ) }
+        it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').without( 'options' ) }
       end
       describe 'when customising the key parameters' do
         let :title do
-          'user@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -85,7 +85,7 @@ describe 'keymaster::openssh::key', :type => :define do
             :options  => '--these --are --options'
           }
         end
-        it { should contain_keymaster__openssh__key__generate('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__generate('tester@test.example.org').with(
           'ensure'  => 'present',
           'force'   => true,
           'keytype' => 'rsa',
@@ -94,12 +94,12 @@ describe 'keymaster::openssh::key', :type => :define do
           'mindate' => '12/12/2014',
           'tag'     => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__deploy('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'this_key',
           'tag'      => 'user_at_test.example.org'
         ) }
-        it { should contain_keymaster__openssh__key__authorized_key('user@test.example.org').with(
+        it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
           'options'  => '--these --are --options',
           'tag'      => 'user_at_test.example.org'
