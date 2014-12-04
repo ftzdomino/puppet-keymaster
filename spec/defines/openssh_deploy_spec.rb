@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 describe 'keymaster::openssh::key::deploy', :type => :define do
   context 'on a Debian OS' do
     let :facts do
@@ -9,12 +10,22 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
         :fqdn                   => 'test.example.org',
       }
     end
+    # before do
+    #   key_path  = File.expand_path '/var/lib/keymaster/openssh/tester_at_test.example.org/key'
+    #   key_dir   = File.dirname(key_path)
+    #   tokens = key_dir.split('/')
+    #   1.upto(tokens.size) do |n|
+    #     dir = tokens[0..n].join('/')
+    #     Dir.mkdir(dir) unless File.directory?(dir)
+    #   end
+    #   File.open(key_path, 'w'){|f| f.write("-----BEGIN RSA PRIVATE KEY-----\nTHISISAFAKERSAHASH\n-----END RSA PRIVATE KEY-----")}
+    #   File.open("#{key_path}.pub", 'w'){|f| f.write('ssh-rsa THISISAFAKERSAHASH foo@baa')}
+    # end
     describe 'with default keymaster' do
       let :pre_condition do
-        "include keymaster\nuser{'tester': home => '/home/tester'}"
+        "include keymaster\nuser{'tester': home => '/home/tester', gid => 'tester'}"
       end
       describe 'with minumum parameters' do
-        # These will most likely fail without fixtures set up
         let :title do
           'tester@test.example.org'
         end
@@ -30,25 +41,24 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
           'group'  => 'tester',
           'mode'   => '0700'
         ) }
-        # Testing the content should also be done, requires fixtures set up
         it { should contain_file('/home/tester/.ssh/id_rsa').with(
           'ensure'  => 'file',
           'owner'   => 'tester',
           'group'   => 'tester',
           'mode'    => '0600',
+          'content' => "-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----\n",
           'require' => 'File[/home/tester/.ssh]'
         ) }
-        # Testing the content should also be done, requires fixtures set up
         it { should contain_file('/home/tester/.ssh/id_rsa.pub').with(
           'ensure'  => 'file',
           'owner'   => 'tester',
           'group'   => 'tester',
           'mode'    => '0644',
+          'content' => "ssh-rsa THISISAFAKERSAHASH tester@test.example.org\n",
           'require' => 'File[/home/tester/.ssh]'
         ) }
       end
       describe 'when ensure is absent' do
-        # These will most likely fail without fixtures set up
         let :title do
           'tester@test.example.org'
         end
@@ -59,20 +69,12 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
-        it { should contain_file('/home/tester/.ssh').with(
-          'ensure' => 'directory',
-          'owner'  => 'tester',
-          'group'  => 'tester',
-          'mode'   => '0700'
-        ) }
-        # Testing the content should also be done, requires fixtures set up
         it { should contain_file('/home/tester/.ssh/id_rsa').with_ensure('absent') }
-        # Testing the content should also be done, requires fixtures set up
         it { should contain_file('/home/tester/.ssh/id_rsa.pub').with_ensure('absent') }
       end
       describe 'when key source files not present' do
         let :title do
-          'tester@test.example.org'
+          'toaster@some.other.org'
         end
         let :params do
           {
@@ -80,9 +82,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
-        it { should_not contain_file('/home/tester/.ssh') }
-        it { should_not contain_file('/home/tester/.ssh/id_rsa') }
-        it { should_not contain_file('/home/tester/.ssh/id_rsa.pub') }
+        it { should raise_error(Puppet::Error, /Private key file \/var\/lib\/keymaster\/openssh\/toaster_at_some.other.org\/key for key toaster@some.other.org not found on keymaster./) }
       end
     end
   end

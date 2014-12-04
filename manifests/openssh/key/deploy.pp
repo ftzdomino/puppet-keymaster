@@ -9,10 +9,11 @@ define keymaster::openssh::key::deploy (
 
   # get homedir and primary group of $user
   $home  = getparam(User[$user],'home')
-  $group = getparam(User[$user],'group')
+  $group = getparam(User[$user],'gid')
 
+  $clean_name = regsubst($name, '@', '_at_')
   # filename of private key on the keymaster (source)
-  $key_src_file = "${::keymaster::keystore_openssh}/${name}/key"
+  $key_src_file = "${::keymaster::keystore_openssh}/${clean_name}/key"
 
   # filename of private key on the ssh client host (target)
   $key_tgt_file = "${home}/.ssh/${filename}"
@@ -29,10 +30,10 @@ define keymaster::openssh::key::deploy (
   # test for homedir and primary group
   } elsif ! $home {
     #notify { "Can't determine home directory of user $user": }
-    err ( "Can't determine home directory of user ${user}" )
+    fail( "Can't determine home directory of user ${user}" )
   } elsif ! $group {
     #notify { "Can't determine primary group of user $user": }
-    err ( "Can't determine primary group of user ${user}" )
+    fail( "Can't determine primary group of user ${user}" )
 
   # If syntax of pubkey checks out, install keypair on client
   } elsif ( $key_src_content_pub =~ /^(ssh-...) ([^ ]+)/ ) {
@@ -60,7 +61,7 @@ define keymaster::openssh::key::deploy (
       mode    => '0600',
       require => File["${home}/.ssh"],
     }
-    
+
     file { "${key_tgt_file}.pub":
       ensure  => 'file',
       content => "${keytype} ${modulus} ${name}\n",
@@ -70,9 +71,8 @@ define keymaster::openssh::key::deploy (
       require => File["${home}/.ssh"],
     }
 
-  # Else the keymaster has not realized the sshauth::keys::master resource yet
   } else {
-    notify { "Private key file ${key_src_file} for key ${name} not found on keymaster; skipping ensure => present": }
+    fail("Private key file ${key_src_file} for key ${name} not found on keymaster.")
   }
 
 }

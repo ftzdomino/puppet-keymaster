@@ -11,7 +11,7 @@ describe 'keymaster::openssh::key', :type => :define do
     end
     describe 'with default keymaster and realising stored resources' do
       let :pre_condition do
-        "include keymaster\nKeymaster::Openssh::Key::Generate <| |>\nKeymaster::Openssh::Key::Deploy <| |> { user => 'tester' }\nKeymaster::Openssh::Key::Authorized_key <| |> { user => 'tester' }"
+        "include keymaster\nuser{'tester': home => '/home/tester', gid => 'tester'}\nKeymaster::Openssh::Key::Generate <| |>\nKeymaster::Openssh::Key::Deploy <| |> { user => 'tester' }\nKeymaster::Openssh::Key::Authorized_key <| |> { user => 'tester' }"
       end
       describe 'with no parameters' do
         let :title do
@@ -22,7 +22,7 @@ describe 'keymaster::openssh::key', :type => :define do
           'force'   => false,
           'keytype' => 'rsa',
           'length'  => '2048',
-          'tag'     => 'user_at_test.example.org'
+          'tag'     => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'maxdays') }
@@ -31,11 +31,11 @@ describe 'keymaster::openssh::key', :type => :define do
         it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'id_rsa',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').without( 'options' ) }
       end
@@ -54,7 +54,7 @@ describe 'keymaster::openssh::key', :type => :define do
           'force'   => false,
           'keytype' => 'dsa',
           'length'  => '1024',
-          'tag'     => 'user_at_test.example.org'
+          'tag'     => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__generate('tester@test.example.org').without(
           'maxdays') }
@@ -63,11 +63,11 @@ describe 'keymaster::openssh::key', :type => :define do
         it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'id_dsa',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').without( 'options' ) }
       end
@@ -92,17 +92,17 @@ describe 'keymaster::openssh::key', :type => :define do
           'length'  => '3072',
           'maxdays' => '34',
           'mindate' => '12/12/2014',
-          'tag'     => 'user_at_test.example.org'
+          'tag'     => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__deploy('tester@test.example.org').with(
           'ensure'   => 'present',
           'filename' => 'this_key',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
         it { should contain_keymaster__openssh__key__authorized_key('tester@test.example.org').with(
           'ensure'   => 'present',
           'options'  => '--these --are --options',
-          'tag'      => 'user_at_test.example.org'
+          'tag'      => 'tester_at_test.example.org'
         ) }
       end
     end

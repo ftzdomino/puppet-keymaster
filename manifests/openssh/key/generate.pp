@@ -24,7 +24,8 @@ define keymaster::openssh::key::generate (
     mode  => '0600',
   }
 
-  $keydir     = "${::keymaster::keystore_openssh}/${name}"
+  $clean_name = regsubst($name, '@', '_at_')
+  $keydir     = "${::keymaster::keystore_openssh}/${clean_name}"
   $keyfile    = "${keydir}/key"
 
   file { "${name}_dir":

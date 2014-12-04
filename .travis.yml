@@ -1,6 +1,10 @@
 language: ruby
-sudo: false
+# sudo: false
 bundler_args: --without development
+before_install:
+  - sudo mkdir -p /var/lib/keymaster/openssh/tester_at_test.example.org
+  - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/openssh/tester_at_test.example.org/key"
+  - sudo sh -c "echo 'ssh-rsa THISISAFAKERSAHASH foo@baa' > /var/lib/keymaster/openssh/tester_at_test.example.org/key.pub"
 before_script:
   - bundle exec rake validate_ruby_syntax
   - bundle exec rake check_line_endings

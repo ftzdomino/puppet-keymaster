@@ -15,42 +15,42 @@ describe 'keymaster::openssh::key::generate', :type => :define do
       end
       describe 'with no parameters' do
         let :title do
-          '@test.example.org'
+          'tester@test.example.org'
         end
-        it { should contain_file('@test.example.org_dir').with(
+        it { should contain_file('tester@test.example.org_dir').with(
           'ensure' => 'directory',
-          'path'   => '/var/lib/keymaster/openssh/@test.example.org',
+          'path'   => '/var/lib/keymaster/openssh/tester_at_test.example.org',
           'mode'   => '0644',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
-        it { should contain_file('@test.example.org_key').with(
+        it { should contain_file('tester@test.example.org_key').with(
           'ensure' => 'present',
-          'path'   => '/var/lib/keymaster/openssh/@test.example.org/key',
+          'path'   => '/var/lib/keymaster/openssh/tester_at_test.example.org/key',
           'mode'   => '0600',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
-        it { should contain_file('@test.example.org_pub').with(
+        it { should contain_file('tester@test.example.org_pub').with(
           'ensure' => 'present',
-          'path'   => '/var/lib/keymaster/openssh/@test.example.org/key.pub',
+          'path'   => '/var/lib/keymaster/openssh/tester_at_test.example.org/key.pub',
           'mode'   => '0600',
           'owner' => 'puppet',
           'group' => 'puppet'
         ) }
-        it { should contain_exec('Create key @test.example.org: rsa, 2048 bits').with(
-          'command' => 'ssh-keygen -t rsa -b 2048 -f /var/lib/keymaster/openssh/@test.example.org/key -C \'rsa 2048\' -N \'\'',
+        it { should contain_exec('Create key tester@test.example.org: rsa, 2048 bits').with(
+          'command' => 'ssh-keygen -t rsa -b 2048 -f /var/lib/keymaster/openssh/tester_at_test.example.org/key -C \'rsa 2048\' -N \'\'',
           'user'    => 'puppet',
           'group'   => 'puppet',
-          'creates' => '/var/lib/keymaster/openssh/@test.example.org/key',
-          'before'  => [ 'File[@test.example.org_key]', 'File[@test.example.org_pub]' ],
-          'require' => 'File[@test.example.org_dir]'
+          'creates' => '/var/lib/keymaster/openssh/tester_at_test.example.org/key',
+          'before'  => [ 'File[tester@test.example.org_key]', 'File[tester@test.example.org_pub]' ],
+          'require' => 'File[tester@test.example.org_dir]'
         ) }
-        it { should_not contain_exec('Revoke previous key @test.example.org: force=true') }
+        it { should_not contain_exec('Revoke previous key tester@test.example.org: force=true') }
       end
       describe 'when specifying a DSA key' do
         let :title do
-          '@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
@@ -58,25 +58,25 @@ describe 'keymaster::openssh::key::generate', :type => :define do
             :length  => '4096'
           }
         end
-        it { should contain_exec('Create key @test.example.org: dsa, 1024 bits').with(
-          'command' => "ssh-keygen -t dsa -b 1024 -f /var/lib/keymaster/openssh/@test.example.org/key -C 'dsa 1024' -N ''"
+        it { should contain_exec('Create key tester@test.example.org: dsa, 1024 bits').with(
+          'command' => "ssh-keygen -t dsa -b 1024 -f /var/lib/keymaster/openssh/tester_at_test.example.org/key -C 'dsa 1024' -N ''"
         ) }
       end
       describe 'when forcing key replacement' do
         let :title do
-          '@test.example.org'
+          'tester@test.example.org'
         end
         let :params do
           {
             :force => true
           }
         end
-        it { should contain_exec('Revoke previous key @test.example.org: force=true').with(
-          'command' => "rm /var/lib/keymaster/openssh/@test.example.org/key /var/lib/keymaster/openssh/@test.example.org/key.pub",
-          'before'  => 'Exec[Create key @test.example.org: rsa, 2048 bits]'
+        it { should contain_exec('Revoke previous key tester@test.example.org: force=true').with(
+          'command' => "rm /var/lib/keymaster/openssh/tester_at_test.example.org/key /var/lib/keymaster/openssh/tester_at_test.example.org/key.pub",
+          'before'  => 'Exec[Create key tester@test.example.org: rsa, 2048 bits]'
         ) }
       end
-      # There should be tests for maxage and mindate, which require fiddling about with fixtures
+      # There should be tests for maxage and mindate... which could be tricky
     end
   end
 end
