@@ -1,4 +1,4 @@
-# This defines an openssh key
+# This defines an openssh key pair
 define keymaster::openssh::key (
   $ensure   = present,
   $filename = undef,

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'fileutils'
 describe 'keymaster::openssh::key::deploy', :type => :define do
   context 'on a Debian OS' do
     let :facts do
@@ -10,17 +9,6 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
         :fqdn                   => 'test.example.org',
       }
     end
-    # before do
-    #   key_path  = File.expand_path '/var/lib/keymaster/openssh/tester_at_test.example.org/key'
-    #   key_dir   = File.dirname(key_path)
-    #   tokens = key_dir.split('/')
-    #   1.upto(tokens.size) do |n|
-    #     dir = tokens[0..n].join('/')
-    #     Dir.mkdir(dir) unless File.directory?(dir)
-    #   end
-    #   File.open(key_path, 'w'){|f| f.write("-----BEGIN RSA PRIVATE KEY-----\nTHISISAFAKERSAHASH\n-----END RSA PRIVATE KEY-----")}
-    #   File.open("#{key_path}.pub", 'w'){|f| f.write('ssh-rsa THISISAFAKERSAHASH foo@baa')}
-    # end
     describe 'with default keymaster' do
       let :pre_condition do
         "include keymaster\nuser{'tester': home => '/home/tester', gid => 'tester'}"
