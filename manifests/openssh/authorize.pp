@@ -1,9 +1,21 @@
 # Deploy a previousl defined key to a user's .ssh/authorized_key file
 define keymaster::openssh::authorize (
+  $user,
   $ensure  = undef,
-  $user    = undef,
   $options = undef,
 ) {
+
+  if $ensure {
+    validate_re($ensure,['^present$','^absent$'])
+  }
+
+  if ! defined(User[$user]) {
+    fail("The user '${user}' has not been defined in Puppet")
+  }
+
+  if ! defined(Keymaster::Openssh::Key[$name]) {
+    fail("There is no Keymaster::Openssh::Key defined that matches '${name}'")
+  }
 
   $clean_name = regsubst($name, '@', '_at_')
   # Override the defaults set in sshauth::key, as needed.
@@ -12,7 +24,6 @@ define keymaster::openssh::authorize (
   # three params.  Otherwise override bahavior is unpredictible.
   #
   if ( $user and $ensure and $options ) {
-  #notify {"sshauth::server: user and ensure and options":}
     Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
       user    => $user,
       ensure  => $ensure,
@@ -20,47 +31,31 @@ define keymaster::openssh::authorize (
     }
 
   } elsif ( $user and $ensure ) {
-  #notify {"sshauth::server: user and ensure":}
     Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
       ensure => $ensure,
       user   => $user,
     }
 
   } elsif ( $user and $options ) {
-  #notify {"sshauth::server: user and options":}
     Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
       user    => $user,
       options => $options,
     }
 
   } elsif ( $options and $ensure ) {
-  #notify {"sshauth::server: options and ensure":}
     Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
       ensure  => $ensure,
       options => $options,
     }
 
   } elsif $user {
-  #notify {"sshauth::server: user only":}
     Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
       user  => $user,
     }
 
-  } elsif $ensure {
-  #notify {"sshauth::server: ensure only":}
-    Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
-      ensure  => $ensure,
-    }
-
-  } elsif $options {
-  #notify {"sshauth::server: options only":}
-    Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>> {
-      options => $options,
-    }
-
   } else {
-  #notify {"sshauth::server: default":}
-    Keymaster::Openssh::Key::Authorized_key <<| tag == $clean_name |>>
+    # Should never get here
+    fail('The user parameter is required')
   }
 
 }

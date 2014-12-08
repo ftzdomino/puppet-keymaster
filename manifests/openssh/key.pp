@@ -1,6 +1,6 @@
 # This defines an openssh key pair
 define keymaster::openssh::key (
-  $ensure   = present,
+  $ensure   = 'present',
   $filename = undef,
   $keytype  = 'rsa',
   $length   = '2048',

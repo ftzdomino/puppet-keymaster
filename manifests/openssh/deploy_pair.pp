@@ -1,11 +1,21 @@
 # This resource deploys an instances of a key pair
 define keymaster::openssh::deploy_pair (
+  $user,
   $ensure   = undef,
-  $user     = undef,
   $filename = undef
 ) {
 
-  validate_re($ensure,['^present$','^absent$'])
+  if $ensure {
+    validate_re($ensure,['^present$','^absent$'])
+  }
+
+  if ! defined(User[$user]) {
+    fail("The user '${user}' has not been defined in Puppet")
+  }
+
+  if ! defined(Keymaster::Openssh::Key[$name]) {
+    fail("There is no Keymaster::Openssh::Key defined that matches '${name}'")
+  }
 
   $clean_name = regsubst($name, '@', '_at_')
 
@@ -41,18 +51,9 @@ define keymaster::openssh::deploy_pair (
       user => $user,
     }
 
-  } elsif ( $ensure ) {
-    Keymaster::Openssh::Key::Deploy <<| tag == $clean_name |>> {
-      ensure => $ensure,
-    }
-
-  } elsif ( $filename ) {
-    Keymaster::Openssh::Key::Deploy <<| tag == $clean_name |>> {
-      filename => $filename,
-    }
-
   } else {
-    Keymaster::Openssh::Key::Deploy <<| tag == $clean_name |>>
+    # Should never get here
+    fail('The user parameter is required')
   }
 
 }

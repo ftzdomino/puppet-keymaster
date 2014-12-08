@@ -7,6 +7,10 @@ define keymaster::openssh::key::deploy (
   $ensure = 'present',
 ) {
 
+  if ! defined(User[$user]) {
+    fail("The user '${user}' has not been defined in Puppet")
+  }
+
   # get homedir and primary group of $user
   $home  = getparam(User[$user],'home')
   $group = getparam(User[$user],'gid')

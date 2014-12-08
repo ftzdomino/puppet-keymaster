@@ -11,6 +11,10 @@ define keymaster::openssh::key::authorized_key (
   $key_src_file = "${key_src_dir}/key.pub"
   $key_src_content = file($key_src_file, '/dev/null')
 
+  if ! defined(User[$user]) {
+    fail("The user '${user}' has not been defined in Puppet")
+  }
+
   # If absent, remove from authorized_keys
   if $ensure == 'absent' {
     ssh_authorized_key { $name:
