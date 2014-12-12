@@ -8,6 +8,8 @@ Initially Keymaster will handle SSH keys and certificates for users and host SSH
 
 It is the intention that using Keymaster means that the content of a key or certificate not be stored in a Puppet manifest or Hiera data store.
 
+This module does not install the ssh client, sshd service, or the OpenSSH packages. The [saz-ssh](https://forge.puppetlabs.com/saz/ssh) module is recommended for managing the ssh client and service.
+
 ## Background
 
 This module implements and expands the OpenSSH key store and generation as described in this [article on ssh::auth](http://projects.puppetlabs.com/projects/1/wiki/Module_Ssh_Auth_Patterns).

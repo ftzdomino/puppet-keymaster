@@ -60,7 +60,7 @@ describe 'keymaster', :type => :class do
         :fqdn                   => 'test.example.org',
       }
     end
-    it { should raise_error(Puppet::Error, /The keymaster Puppet module does not support RedHat family of operating systems/) }
+    it { should compile }
   end
 
   context 'on an Unknown OS' do

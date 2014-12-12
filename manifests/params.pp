@@ -22,6 +22,9 @@ class keymaster::params {
     Debian:{
       # Do nothing
     }
+    RedHat:{
+      # Do nothing
+    }
     default:{
       fail("The keymaster Puppet module does not support ${::osfamily} family of operating systems")
     }

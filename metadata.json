@@ -1,17 +1,21 @@
 {
   "name": "Aethylred-keymaster",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Aethylred",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "summary": "A module for installing and managing keymaster",
-  "source": "https://github.com/Aethylred/keymaster",
-  "project_page": "https://github.com/Aethylred/keymaster",
-  "issues_url": "https://github.com/Aethylred/keymaster/issues",
-  "tags": ["keymaster"],
+  "source": "https://github.com/Aethylred/puppet-keymaster",
+  "project_page": "https://github.com/Aethylred/puppet-keymaster",
+  "issues_url": "https://github.com/Aethylred/puppet-keymaster/issues",
+  "tags": ["keymaster","ssh","rsa","dsa","authorized_keys","publickey","privatekey","openssh"],
   "operatingsystem_support": [
     {
     "operatingsystem": "Ubuntu",
-    "operatingsystemrelease": [ "12.04", "13.10" ]
+    "operatingsystemrelease": [ "12.04", "13.10", "14.04" ]
+    },
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "5.0", "6.0" ]
     }
    ],
   "dependencies": [
