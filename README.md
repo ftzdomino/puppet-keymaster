@@ -1,5 +1,7 @@
 # Keymaster
 
+[![Build Status](https://travis-ci.org/Aethylred/puppet-keymaster.svg?branch=master)](https://travis-ci.org/Aethylred/puppet-keymaster)
+
 The Keymaster Puppet module is intended to manage the deployment and redeployment of keys, certificate, and other security tokens across Puppet nodes, services, applications, and users.
 
 Keymaster will generate self-signed keys and deploy them, or can deploy keys that have been pre-generated and seeded into it's keystore.
