@@ -33,16 +33,22 @@ define keymaster::openssh::key::deploy (
 
   # test for homedir and primary group
   } elsif ! $home {
-    #notify { "Can't determine home directory of user $user": }
     fail( "Can't determine home directory of user ${user}" )
-  } elsif ! $group {
-    #notify { "Can't determine primary group of user $user": }
-    fail( "Can't determine primary group of user ${user}" )
 
   # If syntax of pubkey checks out, install keypair on client
   } elsif ( $key_src_content_pub =~ /^(ssh-...) ([^ ]+)/ ) {
     $keytype = $1
     $modulus = $2
+
+    # Mangling all the non-true values for group
+    # the choices were to force undefined or use $name
+    # $name might be unpredictible... so undef
+    if $group {
+      $real_group = $group
+    } else {
+      warning("Can't determine primary group of user ${user}")
+      $real_group = undef
+    }
 
     # QUESTION: what about the homedir?  should we create that if 
     # not defined also? I think not.
@@ -52,7 +58,7 @@ define keymaster::openssh::key::deploy (
       file { "${home}/.ssh":
         ensure => 'directory',
         owner  => $user,
-        group  => $group,
+        group  => $real_group,
         mode   => '0700',
       }
     }
@@ -61,7 +67,7 @@ define keymaster::openssh::key::deploy (
       ensure  => 'file',
       content => file($key_src_file, '/dev/null'),
       owner   => $user,
-      group   => $group,
+      group   => $real_group,
       mode    => '0600',
       require => File["${home}/.ssh"],
     }
@@ -70,7 +76,7 @@ define keymaster::openssh::key::deploy (
       ensure  => 'file',
       content => "${keytype} ${modulus} ${name}\n",
       owner   => $user,
-      group   => $group,
+      group   => $real_group,
       mode    => '0644',
       require => File["${home}/.ssh"],
     }
