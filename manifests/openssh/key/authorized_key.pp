@@ -22,13 +22,13 @@ define keymaster::openssh::key::authorized_key (
       user   => $user,
     }
 
-  # If no key content, do nothing.  wait for keymaster to realise key resource
+  # If no key content, do nothing,  wait for keymaster to realise key resource
   } elsif ! $key_src_content {
-    fail("Public key file ${key_src_file} for key ${name} not found on keymaster")
+    warning("Public key file ${key_src_file} for key ${name} not found on keymaster")
 
   # Make sure key content parses
   } elsif $key_src_content !~ /^(ssh-...) ([^ ]*)/ {
-    fail("Can't parse public key file ${key_src_file} for key ${name} on keymaster")
+    warning("Can't parse public key file ${key_src_file} for key ${name} on keymaster")
 
   # All's good.  install the pubkey.
   } else {

@@ -70,7 +70,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
-        it { should raise_error(Puppet::Error, /Private key file \/var\/lib\/keymaster\/openssh\/toaster_at_some.other.org\/key for key toaster@some.other.org not found on keymaster./) }
+        it { should compile }
       end
     end
   end

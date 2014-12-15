@@ -76,7 +76,7 @@ define keymaster::openssh::key::deploy (
     }
 
   } else {
-    fail("Private key file ${key_src_file} for key ${name} not found on keymaster.")
+    warning("Private key file ${key_src_file} for key ${name} not found on keymaster.")
   }
 
 }

@@ -23,7 +23,7 @@ describe 'keymaster::openssh::authorize', :type => :define do
             :user => 'tester'
           }
         end
-        it { should raise_error(Puppet::Error, /There is no Keymaster::Openssh::Key defined that matches 'no@key.defined'/) }
+        it { should compile }
       end
       describe 'with an undefined user' do
         let :title do

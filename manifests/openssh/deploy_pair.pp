@@ -13,10 +13,6 @@ define keymaster::openssh::deploy_pair (
     fail("The user '${user}' has not been defined in Puppet")
   }
 
-  if ! defined(Keymaster::Openssh::Key[$name]) {
-    fail("There is no Keymaster::Openssh::Key defined that matches '${name}'")
-  }
-
   $clean_name = regsubst($name, '@', '_at_')
 
   # This is ugly, but we need to accomodate every permutation of the 
