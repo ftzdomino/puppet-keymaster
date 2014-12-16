@@ -16,8 +16,6 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class keymaster (
-  $keystore_base    = $::keymaster::params::keystore_base,
-  $keystore_openssh = $::keymaster::params::keystore_openssh,
   $user             = $::keymaster::params::user,
   $group            = $::keymaster::params::group
 ) inherits keymaster::params {
@@ -25,7 +23,7 @@ class keymaster (
   # Set up base directory for key storage
   file { 'key_store_base':
     ensure  => 'directory',
-    path    => $keystore_base,
+    path    => $::keymaster::params::keystore_base,
     owner   => $user,
     group   => $group,
     recurse => true,
@@ -34,7 +32,7 @@ class keymaster (
 
   file { 'key_store_openssh':
     ensure  => 'directory',
-    path    => $keystore_openssh,
+    path    => $::keymaster::params::keystore_openssh,
     owner   => $user,
     group   => $group,
     recurse => true,

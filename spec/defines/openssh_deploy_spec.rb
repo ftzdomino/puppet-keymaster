@@ -23,6 +23,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
+        it { should contain_class('keymaster::params') }
         it { should contain_file('/home/tester/.ssh').with(
           'ensure' => 'directory',
           'owner'  => 'tester',

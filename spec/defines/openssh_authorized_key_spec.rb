@@ -22,6 +22,7 @@ describe 'keymaster::openssh::key::authorized_key', :type => :define do
             :user   => 'tester'
           }
         end
+        it { should contain_class('keymaster::params') }
         it { should contain_ssh_authorized_key('tester@test.example.org').with(
           'ensure'  => 'present',
           'user'    => 'tester',

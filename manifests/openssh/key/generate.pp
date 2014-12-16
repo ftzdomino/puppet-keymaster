@@ -8,6 +8,8 @@ define keymaster::openssh::key::generate (
   $mindate = undef
 ) {
 
+  include keymaster::params
+
   validate_re($keytype, ['^rsa$','^dsa$'])
 
   if $keytype == 'dsa' {
@@ -25,7 +27,7 @@ define keymaster::openssh::key::generate (
   }
 
   $clean_name = regsubst($name, '@', '_at_')
-  $keydir     = "${::keymaster::keystore_openssh}/${clean_name}"
+  $keydir     = "${::keymaster::params::keystore_openssh}/${clean_name}"
   $keyfile    = "${keydir}/key"
 
   file { "${name}_dir":

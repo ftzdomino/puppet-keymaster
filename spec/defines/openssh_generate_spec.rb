@@ -17,6 +17,7 @@ describe 'keymaster::openssh::key::generate', :type => :define do
         let :title do
           'tester@test.example.org'
         end
+        it { should contain_class('keymaster::params') }
         it { should contain_file('tester@test.example.org_dir').with(
           'ensure' => 'directory',
           'path'   => '/var/lib/keymaster/openssh/tester_at_test.example.org',

@@ -31,20 +31,18 @@ describe 'keymaster', :type => :class do
     describe 'when setting parameters' do
       let :params do
         {
-          :keystore_base    => '/path/to/base',
-          :keystore_openssh => '/path/to/base/ssh',
           :user             => 'nobody',
           :group            => 'nogroup'
         }
       end
       it { should contain_class('keymaster::params') }
       it { should contain_file('key_store_base').with(
-        'path'    => '/path/to/base',
+        'path'    => '/var/lib/keymaster',
         'owner'   => 'nobody',
         'group'   => 'nogroup'
       ) }
       it { should contain_file('key_store_openssh').with(
-        'path'    => '/path/to/base/ssh',
+        'path'    => '/var/lib/keymaster/openssh',
         'owner'   => 'nobody',
         'group'   => 'nogroup'
       ) }

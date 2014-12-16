@@ -5,9 +5,11 @@ define keymaster::openssh::key::authorized_key (
   $options = undef,
 ) {
 
+  include keymaster::params
+
   # on the keymaster:
   $clean_name = regsubst($name, '@', '_at_')
-  $key_src_dir  = "${::keymaster::keystore_openssh}/${clean_name}"
+  $key_src_dir  = "${::keymaster::params::keystore_openssh}/${clean_name}"
   $key_src_file = "${key_src_dir}/key.pub"
   $key_src_content = file($key_src_file, '/dev/null')
 

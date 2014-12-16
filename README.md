@@ -114,17 +114,9 @@ keymaster::openssh::key{'this_key': }
 
 ## `keymaster`
 
-The `keymaster` class prepares a Puppet master to act as a Keymaster key store. This class prepares and secures a directory (`/var/lib/keymaster` by default) to store the files used by the other resources defined in this module. The `keymaster` class realises the virtual and stored classes created by the resources defined in this module, making them available to be deployed by Puppet.
+The `keymaster` class prepares a Puppet master to act as a Keymaster key store. This class prepares and secures a directory (`/var/lib/keymaster`) to store the files used by the other resources defined in this module. The `keymaster` class realises the virtual and stored classes created by the resources defined in this module, making them available to be deployed by Puppet.
 
 ### Parameters
-
-#### `keystore_base`
-
-This parameter sets the base directory where the Keymaster will store its collection of keys. The default is `/var/lib/keymaster`.
-
-#### `keystore_openssh`
-
-This parameter sets the base directory where the Keymaster will store its collection of OpenSSH keys. The default is `/var/lib/keymaster/openssh`.
 
 #### `user`
 

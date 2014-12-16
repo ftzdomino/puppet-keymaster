@@ -7,6 +7,8 @@ define keymaster::openssh::key::deploy (
   $ensure = 'present',
 ) {
 
+  include keymaster::params
+
   if ! defined(User[$user]) {
     fail("The user '${user}' has not been defined in Puppet")
   }
@@ -16,7 +18,7 @@ define keymaster::openssh::key::deploy (
   $group = getparam(User[$user],'gid')
 
   $clean_name = regsubst($name, '@', '_at_')
-  $key_src_dir  = "${::keymaster::keystore_openssh}/${clean_name}"
+  $key_src_dir  = "${::keymaster::params::keystore_openssh}/${clean_name}"
   # filename of private key on the keymaster (source)
   $key_private_file = "${key_src_dir}/key"
   $key_public_file  = "${key_private_file}.pub"
