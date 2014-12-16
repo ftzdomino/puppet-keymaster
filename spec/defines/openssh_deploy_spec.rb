@@ -70,7 +70,7 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
-        it { should compile }
+        it { should raise_error(Puppet::Error, /Can't read public key \/var\/lib\/keymaster\/openssh\/toaster_at_some.other.org\/key.pub/) }
       end
     end
   end

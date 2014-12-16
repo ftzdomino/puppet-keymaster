@@ -16,16 +16,17 @@ define keymaster::openssh::key::deploy (
   $group = getparam(User[$user],'gid')
 
   $clean_name = regsubst($name, '@', '_at_')
+  $key_src_dir  = "${::keymaster::keystore_openssh}/${clean_name}"
   # filename of private key on the keymaster (source)
-  $key_src_file = "${::keymaster::keystore_openssh}/${clean_name}/key"
+  $key_private_file = "${key_src_dir}/key"
+  $key_public_file  = "${key_private_file}.pub"
 
   # filename of private key on the ssh client host (target)
   $key_tgt_file = "${home}/.ssh/${filename}"
 
-  # contents of public key on the keymaster
-  $key_src_content_pub = file("${key_src_file}.pub", '/dev/null')
-
-
+  # read contents of key from the keymaster
+  $key_public_content  = file($key_public_file, '/dev/null')
+  $key_private_content = file($key_private_file, '/dev/null')
 
   # If 'absent', revoke the client keys
   if $ensure == 'absent' {
@@ -34,9 +35,12 @@ define keymaster::openssh::key::deploy (
   # test for homedir and primary group
   } elsif ! $home {
     fail( "Can't determine home directory of user ${user}" )
-
-  # If syntax of pubkey checks out, install keypair on client
-  } elsif ( $key_src_content_pub =~ /^(ssh-...) ([^ ]+)/ ) {
+  } elsif ! $key_public_content {
+    fail( "Can't read public key ${key_public_file}" )
+  } elsif ! $key_private_content {
+    fail( "Can't read private key ${key_private_file}" )
+  } elsif ( $key_public_content =~ /^(ssh-...) (\S*)/ ) {
+    # If syntax of pubkey checks out, install keypair on client
     $keytype = $1
     $modulus = $2
 
@@ -65,7 +69,7 @@ define keymaster::openssh::key::deploy (
 
     file { $key_tgt_file:
       ensure  => 'file',
-      content => file($key_src_file, '/dev/null'),
+      content => $key_private_content,
       owner   => $user,
       group   => $real_group,
       mode    => '0600',
@@ -82,7 +86,7 @@ define keymaster::openssh::key::deploy (
     }
 
   } else {
-    warning("Private key file ${key_src_file} for key ${name} not found on keymaster.")
+    warning("Private key file ${key_private_file} for key ${name} not found on keymaster.")
   }
 
 }
