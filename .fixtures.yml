@@ -7,5 +7,8 @@ fixtures:
     stdlib:
       repo: 'puppetlabs-stdlib'
       ref:  '4.4.0'
+    ssh:
+      repo: 'saz-ssh'
+      ref:  '2.4.0'
   symlinks:
     keymaster: "#{source_dir}"

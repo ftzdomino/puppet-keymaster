@@ -39,7 +39,17 @@ class keymaster (
     mode    => '0640',
   }
 
+  file { 'key_store_host_key':
+    ensure  => 'directory',
+    path    => $::keymaster::params::keystore_host_key,
+    owner   => $user,
+    group   => $group,
+    recurse => true,
+    mode    => '0640',
+  }
+
   # Collect all keys
   Keymaster::Openssh::Key::Generate <<| |>>
+  Keymaster::Host_key::Key::Generate <<| |>>
 
 }

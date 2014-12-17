@@ -1,6 +1,6 @@
 {
   "name": "Aethylred-keymaster",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "author": "Aethylred",
   "license": "Apache-2.0",
   "summary": "A module for installing and managing keymaster",
@@ -19,7 +19,8 @@
     }
    ],
   "dependencies": [
-    { "name": "puppetlabs/stdlib",  "version_requirement": ">=4.2.0 <5.0.0" }
+    { "name": "puppetlabs/stdlib", "version_requirement": ">=4.2.0 <5.0.0" },
+    { "name": "saz/ssh", "version_requirement": ">=2.4.0 <3.0.0" }
     // { "name": "puppetlabs/apache",  "version_requirement": "1.0.1" },
   ] 
 }

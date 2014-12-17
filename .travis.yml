@@ -2,9 +2,13 @@ language: ruby
 # sudo: false
 bundler_args: --without development
 before_install:
+# Make a whole bunch files to test against
   - sudo mkdir -p /var/lib/keymaster/openssh/tester_at_test.example.org
+  - sudo mkdir -p /var/lib/keymaster/host_key/test.example.org
   - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/openssh/tester_at_test.example.org/key"
   - sudo sh -c "echo 'ssh-rsa THISISAFAKERSAHASH foo@baa' > /var/lib/keymaster/openssh/tester_at_test.example.org/key.pub"
+  - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/host_key/test.example.org/key"
+  - sudo sh -c "echo 'ssh-rsa THISISAFAKERSAHASH foo@baa' > /var/lib/keymaster/host_key/test.example.org/key.pub"
 before_script:
   - bundle exec rake validate_ruby_syntax
   - bundle exec rake check_line_endings
