@@ -36,11 +36,17 @@ define keymaster::openssh::key::deploy (
 
   # test for homedir and primary group
   } elsif ! $home {
-    fail( "Can't determine home directory of user ${user}" )
+    notify{"openssh_${name}_did_not_run":
+      message => "Can't determine home directory of user ${user}"
+    }
   } elsif ! $key_public_content {
-    fail( "Can't read public key ${key_public_file}" )
+    notify{"openssh_${name}_did_not_run":
+      message => "Can't read public key ${key_public_file}"
+    }
   } elsif ! $key_private_content {
-    fail( "Can't read private key ${key_private_file}" )
+    notify{"openssh_${name}_did_not_run":
+      message => "Can't read private key ${key_private_file}"
+    }
   } elsif ( $key_public_content =~ /^(ssh-...) (\S*)/ ) {
     # If syntax of pubkey checks out, install keypair on client
     $keytype = $1

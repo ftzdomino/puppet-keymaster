@@ -71,7 +71,9 @@ describe 'keymaster::openssh::key::deploy', :type => :define do
             :filename => 'id_rsa'
           }
         end
-        it { should raise_error(Puppet::Error, /Can't read public key \/var\/lib\/keymaster\/openssh\/toaster_at_some.other.org\/key.pub/) }
+        it { should contain_notify('openssh_toaster@some.other.org_did_not_run').with(
+          'message' => 'Can\'t read public key /var/lib/keymaster/openssh/toaster_at_some.other.org/key.pub'
+        ) }
       end
     end
   end

@@ -18,9 +18,13 @@ define keymaster::host_key::key::deploy(
     # uh... deleting or changing a host key would be bad...
 
   } elsif ! $key_public_content {
-    fail( "Can't read public key ${key_public_file}" )
+    notify{"host_key_${name}_did_not_run":
+      message => "Can't read public key ${key_public_file}",
+    }
   } elsif ! $key_private_content {
-    fail( "Can't read private key ${key_private_file}" )
+    notify{"host_key_${name}_did_not_run":
+      message => "Can't read private key ${key_private_file}",
+    }
   } elsif ( $key_public_content =~ /^(ssh-...) (\S*)/ ) {
     # If syntax of pubkey checks out, install keypair on client
     $keytype = $1

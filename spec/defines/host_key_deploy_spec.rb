@@ -38,7 +38,9 @@ describe 'keymaster::host_key::key::deploy', :type => :define do
         let :title do
           'some.other.org'
         end
-        it { should raise_error(Puppet::Error, /Can't read public key \/var\/lib\/keymaster\/host_key\/some.other.org\/key.pub/) }
+        it { should contain_notify('host_key_some.other.org_did_not_run').with(
+          'message' => 'Can\'t read public key /var/lib/keymaster/host_key/some.other.org/key.pub'
+        ) }
       end
     end
   end
