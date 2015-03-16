@@ -16,6 +16,7 @@ class keymaster::params {
   $keystore_base     = '/var/lib/keymaster'
   $keystore_openssh  = "${keystore_base}/openssh"
   $keystore_host_key = "${keystore_base}/host_key"
+  $keystore_x509     = "${keystore_base}/x509"
   $user              = 'puppet'
   $group             = 'puppet'
 

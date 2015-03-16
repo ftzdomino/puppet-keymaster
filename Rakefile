@@ -1,6 +1,7 @@
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
-require 'puppet-syntax/tasks/puppet-syntax'
+# require 'puppet-syntax/tasks/puppet-syntax'
+# PuppetSyntax.fail_on_deprecation_notices = false
 
 exclude_paths = [
   'spec/**/*',
@@ -8,7 +9,7 @@ exclude_paths = [
   'tests/**/*'
 ]
 
-PuppetSyntax.exclude_paths = exclude_paths
+# PuppetSyntax.exclude_paths = exclude_paths
 
 Rake::Task[:lint].clear
 PuppetLint::RakeTask.new :lint do |config|

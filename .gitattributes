@@ -7,11 +7,12 @@
 # *.h text
 
 # Declare files that will always have LF line endings on checkout.
-*.pp text eol=lf
+*.pp text eol=lf linguist-language=Puppet
 *.rb text eol=lf
 *.md text eol=lf
 *.yml text eol=lf
-*.erb text eol=lf
+*.erb text eol=lf linguist-language=Ruby
+*.conf text eol=lf linguist-language=INI
 *.markdown text eol=lf
 Gemfile text eol=lf
 Rakefile text eol=lf

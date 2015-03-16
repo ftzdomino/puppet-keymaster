@@ -5,7 +5,7 @@ define keymaster::host_key::redeploy (
 
   validate_re($ensure,['^present$','^absent$'])
 
-  Keymaster::Host_key::Key::Deploy <<| $tag == $name |>>{
+  Keymaster::Host_key::Key::Deploy <<| tag == $name |>>{
     ensure => $ensure,
   }
 

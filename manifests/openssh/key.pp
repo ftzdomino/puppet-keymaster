@@ -33,7 +33,7 @@ define keymaster::openssh::key (
     "${name} must start with a letter or digit, and may only contain the characters A-Za-z0-9_.:@-"
   )
 
-  $tag = regsubst($name, '@', '_at_')
+  $clean_tag = regsubst($name, '@', '_at_')
 
   # generate exported resources for the keymaster to realize
   @@keymaster::openssh::key::generate { $name:
@@ -43,7 +43,7 @@ define keymaster::openssh::key (
     length  => $real_length,
     maxdays => $maxdays,
     mindate => $mindate,
-    tag     => $tag,
+    tag     => $clean_tag,
   }
 
   # generate exported resources for the ssh client host to realize

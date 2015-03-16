@@ -48,8 +48,18 @@ class keymaster (
     mode    => '0640',
   }
 
+  file { 'key_store_x509':
+    ensure  => 'directory',
+    path    => $::keymaster::params::keystore_x509,
+    owner   => $user,
+    group   => $group,
+    recurse => true,
+    mode    => '0640',
+  }
+
   # Collect all keys
   Keymaster::Openssh::Key::Generate <<| |>>
   Keymaster::Host_key::Key::Generate <<| |>>
+  Keymaster::X509::Cert::Generate <<| |>>
 
 }
