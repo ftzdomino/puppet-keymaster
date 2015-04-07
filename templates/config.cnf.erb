@@ -14,7 +14,7 @@ default_md         = sha1
 prompt             = no
 distinguished_name = req_distinguished_name
 <%- if @aliases and not @aliases.empty? -%>
-req_extensions     = req_aliase
+req_extensions     = req_aliases
 <%- end -%>
  
 [ req_distinguished_name ]
@@ -29,10 +29,9 @@ stateOrProvinceName    = <%= @state %>
 <%- end -%>
 <%- if @email -%>
 emailAddress           = <%= @email %>
-emailAddress_max       = 40
 <%- end -%>
 
-<%- if @aliases -%>
+<%- if ! @aliases.empty? -%>
 [ req_aliases ]
-subjectAltName = "<%= @aliases.collect! {|i| "DNS: #{i}" }.join(', ') -%>"
+subjectAltName = "<%= @aliases.collect {|i| "DNS: #{i}" }.join(', ') -%>"
 <%- end -%>

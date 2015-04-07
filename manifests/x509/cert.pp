@@ -46,13 +46,13 @@ define keymaster::x509::cert (
   }
 
   # generate exported resources for the ssh client host to realize
-  # @@keymaster::x509::cert::deploy { $name:
-  #   tag    => $name,
-  # }
+  @@keymaster::x509::cert::deploy { $name:
+    tag    => $name,
+  }
 
-  # @@keymaster::x509::key::deploy { $name:
-  #   tag    => $name,
-  # }
+  @@keymaster::x509::key::deploy { $name:
+    tag    => $name,
+  }
 
   # if $deploy_cert or $deploy_key {
   #   keymaster::x509::deploy { $name:
