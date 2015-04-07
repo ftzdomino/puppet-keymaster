@@ -50,14 +50,14 @@ define keymaster::openssh::key (
   @@keymaster::openssh::key::deploy { $name:
     ensure   => $ensure,
     filename => $real_filename,
-    tag      => $tag,
+    tag      => $clean_tag,
   }
 
   # generate exported resources for the ssh server host to realize
   @@keymaster::openssh::key::authorized_key { $name:
     ensure  => $ensure,
     options => $options,
-    tag     => $tag,
+    tag     => $clean_tag,
   }
 
 }

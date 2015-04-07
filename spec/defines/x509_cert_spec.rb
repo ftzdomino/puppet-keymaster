@@ -11,7 +11,7 @@ describe 'keymaster::x509::cert', :type => :define do
     end
     describe 'with default keymaster and realising stored resources' do
       let :pre_condition do
-        "include keymaster\nKeymaster::x509::Cert::Generate <| |>"
+        "include keymaster\nKeymaster::X509::Cert::Generate <| |>"
       end
       describe 'with minimum parameters' do
         let :title do

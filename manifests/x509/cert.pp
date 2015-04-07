@@ -33,7 +33,7 @@ define keymaster::x509::cert (
   @@keymaster::x509::cert::generate { $name:
     ensure       => $ensure,
     country      => $country,
-    organisation => $organization,
+    organization => $organization,
     commonname   => $commonname,
     state        => $state,
     locality     => $locality,
