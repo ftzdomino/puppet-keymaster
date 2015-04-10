@@ -1,7 +1,7 @@
 # This deploys a key onto the target node
 define keymaster::x509::key::deploy(
-  $path,
   $ensure = 'present',
+  $path   = undef,
   $owner  = undef,
   $group  = undef
 ) {
@@ -24,15 +24,21 @@ define keymaster::x509::key::deploy(
   # read contents of key from the keymaster
   $key_content  = file($key_file, '/dev/null')
 
+  if $path {
+    $real_path = $path
+  } else {
+    $real_path = "${::keymaster::params::x509_key_dir}/${name}.pem"
+  }
+
   if ! $key_content {
     notify{"x509_${name}_did_not_run":
-      message => "Can't read certificate ${key_file}",
+      message => "Can't read key ${key_file}",
     }
-  } elsif ( $key_content =~ /^(ssh-...) (\S*)/ ) {
+  } else {
 
-    file {"x509_${name}_key":
+    file {"x509_${name}_private_key":
       ensure  => $file_ensure,
-      path    => $path,
+      path    => $real_path,
       owner   => $owner,
       group   => $owner,
       content => $key_content,

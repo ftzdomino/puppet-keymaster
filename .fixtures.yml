@@ -5,10 +5,10 @@ fixtures:
     #   ref:  '1.0.1'
   forge_modules:
     stdlib:
-      repo: 'puppetlabs-stdlib'
+      repo: 'puppetlabs/stdlib'
       ref:  '4.4.0'
     ssh:
-      repo: 'saz-ssh'
-      ref:  '2.4.0'
+      repo: 'saz/ssh'
+      ref:  '2.5.0'
   symlinks:
     keymaster: "#{source_dir}"

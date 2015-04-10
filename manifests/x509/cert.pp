@@ -5,7 +5,7 @@ define keymaster::x509::cert (
   $commonname,
   $ensure      = 'present',
   $selfsign    = true,
-  $type        = 'crt',
+  $type        = undef,
   $state       = undef,
   $locality    = undef,
   $aliases     = [],
@@ -22,7 +22,9 @@ define keymaster::x509::cert (
 ) {
 
   validate_re($ensure,['^present$','^absent$'])
-  validate_re($type,['pem','cer','crt','der','p12'])
+  if $type {
+    validate_re($type,['pem','cer','crt','der','p12'])
+  }
   validate_re(
     $name,
     '^[A-Za-z0-9][A-Za-z0-9_.-]+$',
@@ -54,17 +56,17 @@ define keymaster::x509::cert (
     tag    => $name,
   }
 
-  # if $deploy_cert or $deploy_key {
-  #   keymaster::x509::deploy { $name:
-  #     ensure      => $ensure,
-  #     cert_path   => $cert_path,
-  #     key_path    => $key_path,
-  #     type        => $type,
-  #     owner       => $owner,
-  #     group       => $group,
-  #     deploy_cert => $deploy_cert,
-  #     deploy_key  => $deploy_key,
-  #   }
-  # }
+  if $deploy_cert or $deploy_key {
+    keymaster::x509::deploy { $name:
+      ensure      => $ensure,
+      cert_path   => $cert_path,
+      key_path    => $key_path,
+      type        => $type,
+      owner       => $owner,
+      group       => $group,
+      deploy_cert => $deploy_cert,
+      deploy_key  => $deploy_key,
+    }
+  }
 
 }

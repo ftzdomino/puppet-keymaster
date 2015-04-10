@@ -11,8 +11,8 @@ before_install:
   - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/host_key/test.example.org/key"
   - sudo sh -c "echo 'ssh-rsa THISISAFAKERSAHASH foo@baa' > /var/lib/keymaster/host_key/test.example.org/key.pub"
   - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/x509/test.example.org/key.pem"
-  - sudo sh -c "echo '-----BEGIN CERTIFICATE REQUEST-----THISISAFAKEHASH-----END CERTIFICATE REQUEST-----' > /var/lib/keymaster/x509/test.example.org/cert.csr"
-  - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/cert.crt"
+  - sudo sh -c "echo '-----BEGIN CERTIFICATE REQUEST-----THISISAFAKEHASH-----END CERTIFICATE REQUEST-----' > /var/lib/keymaster/x509/test.example.org/request.csr"
+  - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/certificate.crt"
 before_script:
   - bundle exec rake validate_ruby_syntax
   - bundle exec rake check_line_endings

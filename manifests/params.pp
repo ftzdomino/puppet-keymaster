@@ -22,10 +22,12 @@ class keymaster::params {
 
   case $::osfamily {
     Debian:{
-      # Do nothing
+      $x509_key_dir  = '/etc/ssl/private'
+      $x509_cert_dir = '/etc/ssl/cert'
     }
     RedHat:{
-      # Do nothing
+      $x509_key_dir  = '/etc/pki/tls/private'
+      $x509_cert_dir = '/etc/pki/tls/certs'
     }
     default:{
       fail("The keymaster Puppet module does not support ${::osfamily} family of operating systems")
