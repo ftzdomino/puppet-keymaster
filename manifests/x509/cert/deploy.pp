@@ -10,7 +10,7 @@ define keymaster::x509::cert::deploy(
   validate_re($ensure,['^present$','^absent$'])
 
   if $type {
-    validate_re($type,['pem','cer','crt','der','p12'])
+    validate_re($type,['pem','cer','crt','der','p12','pfx'])
     $real_type = $type
   } else {
     $real_type = 'crt'
@@ -32,12 +32,23 @@ define keymaster::x509::cert::deploy(
   }
 
   $cert_src_dir  = "${::keymaster::params::keystore_x509}/${name}"
-  # filename of private key on the keymaster (source)
-  $cert_file = "${cert_src_dir}/certificate.crt"
 
   # read contents of key from the keymaster
   case $real_type {
-    'crt': {
+    'crt','cer','der': {
+      $cert_file = "${cert_src_dir}/certificate.crt"
+      $cert_content  = file($cert_file, '/dev/null')
+    }
+    'pem': {
+      @@keymaster::x509::cert::pem{$name: }
+      $cert_file = "${cert_src_dir}/certificate.pem"
+      $cert_content  = file($cert_file, '/dev/null')
+    }
+    'p12', 'pfx': {
+      @@keymaster::x509::cert::p12{$name:
+        type => $type,
+      }
+      $cert_file = "${cert_src_dir}/certificate.${type}"
       $cert_content  = file($cert_file, '/dev/null')
     }
     default: {

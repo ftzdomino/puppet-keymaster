@@ -13,6 +13,9 @@ before_install:
   - sudo sh -c "echo '-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----' > /var/lib/keymaster/x509/test.example.org/key.pem"
   - sudo sh -c "echo '-----BEGIN CERTIFICATE REQUEST-----THISISAFAKEHASH-----END CERTIFICATE REQUEST-----' > /var/lib/keymaster/x509/test.example.org/request.csr"
   - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/certificate.crt"
+  - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEPEM-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/certificate.pem"
+  - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEP12-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/certificate.p12"
+  - sudo sh -c "echo '-----BEGIN CERTIFICATE-----THISISAFAKEPFX-----END CERTIFICATE-----' > /var/lib/keymaster/x509/test.example.org/certificate.pfx"
 before_script:
   - bundle exec rake validate_ruby_syntax
   - bundle exec rake check_line_endings

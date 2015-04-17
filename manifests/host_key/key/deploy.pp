@@ -15,7 +15,7 @@ define keymaster::host_key::key::deploy(
   $key_private_content = file($key_private_file, '/dev/null')
 
   if $ensure == 'absent' {
-    # uh... deleting or changing a host key would be bad...
+    # uh... deleting a host key might be bad...
 
   } elsif ! $key_public_content {
     notify{"host_key_${name}_did_not_run":

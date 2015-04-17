@@ -61,5 +61,7 @@ class keymaster (
   Keymaster::Openssh::Key::Generate <<| |>>
   Keymaster::Host_key::Key::Generate <<| |>>
   Keymaster::X509::Cert::Generate <<| |>>
+  Keymaster::X509::Cert::Pem <<| |>>
+  Keymaster::X509::Cert::P12 <<| |>>
 
 }
