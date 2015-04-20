@@ -19,8 +19,12 @@ req_extensions     = req_aliases
  
 [ req_distinguished_name ]
 commonName             = <%= @commonname %>
+<%- if @country -%>
 countryName            = <%= @country %>
+<%- end -%>
+<%- if @organization -%>
 organizationName       = <%= @organization %>
+<%- end -%>
 <%- if @locality -%>
 localityName           = <%= @locality %>
 <%- end -%>

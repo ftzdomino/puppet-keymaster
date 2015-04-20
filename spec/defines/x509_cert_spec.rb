@@ -19,16 +19,12 @@ describe 'keymaster::x509::cert', :type => :define do
         end
         let :params do
           {
-            :country      => 'NZ',
             :commonname   => 'test.example.org',
-            :organization => 'Test Example Organization',
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
           'ensure'       => 'present',
-          'country'      => 'NZ',
           'commonname'   => 'test.example.org',
-          'organization' => 'Test Example Organization',
           'force'        => false,
           'days'         => '365',
           'tag'          => 'test.example.org'
@@ -53,9 +49,7 @@ describe 'keymaster::x509::cert', :type => :define do
         let :params do
           {
             :ensure       => 'absent',
-            :country      => 'NZ',
             :commonname   => 'test.example.org',
-            :organization => 'Test Example Organization',
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
@@ -109,9 +103,7 @@ describe 'keymaster::x509::cert', :type => :define do
       let :params do
         {
           :ensure       => 'present',
-          :country      => 'NZ',
           :commonname   => 'test.example.org',
-          :organization => 'Test Example Organization',
           :deploy_cert  => true,
           :deploy_key   => false,
         }
@@ -129,9 +121,7 @@ describe 'keymaster::x509::cert', :type => :define do
       let :params do
         {
           :ensure       => 'present',
-          :country      => 'NZ',
           :commonname   => 'test.example.org',
-          :organization => 'Test Example Organization',
           :deploy_cert  => false,
           :deploy_key   => true,
         }
@@ -149,9 +139,7 @@ describe 'keymaster::x509::cert', :type => :define do
       let :params do
         {
           :ensure       => 'present',
-          :country      => 'NZ',
           :commonname   => 'test.example.org',
-          :organization => 'Test Example Organization',
           :deploy_cert  => false,
           :deploy_key   => false,
         }
@@ -165,9 +153,7 @@ describe 'keymaster::x509::cert', :type => :define do
       let :params do
         {
           :ensure       => 'present',
-          :country      => 'NZ',
           :commonname   => 'test.example.org',
-          :organization => 'Test Example Organization',
           :cert_path    => '/path/to/cert.crt',
           :key_path     => '/path/to/key.pem',
           :type         => 'der',

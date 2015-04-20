@@ -19,9 +19,7 @@ describe 'keymaster::x509::cert::generate', :type => :define do
         end
         let :params do
           {
-            :country      => 'NZ',
             :commonname   => 'test.example.org',
-            :organization => 'Test Example Organization',
           }
         end
         it { should contain_file('x509_test.example.org_dir').with(
@@ -92,12 +90,6 @@ describe 'keymaster::x509::cert::generate', :type => :define do
         it { should contain_file('x509_test.example.org_cnf').with_content(
           %r{^commonName             = test.example.org$}
         ) }
-        it { should contain_file('x509_test.example.org_cnf').with_content(
-          %r{^countryName            = NZ$}
-        ) }
-        it { should contain_file('x509_test.example.org_cnf').with_content(
-          %r{^organizationName       = Test Example Organization$}
-        ) }
         it { should contain_file('x509_test.example.org_cnf').without_content(
           %r{^req_extensions     = req_aliases}
         ) }
@@ -116,6 +108,12 @@ describe 'keymaster::x509::cert::generate', :type => :define do
         it { should contain_file('x509_test.example.org_cnf').without_content(
           %r{^subjectAltName = "}
         ) }
+        it { should contain_file('x509_test.example.org_cnf').without_content(
+          %r{^countryName            =}
+        ) }
+        it { should contain_file('x509_test.example.org_cnf').without_content(
+          %r{^organizationName       =}
+        ) }
       end
       describe 'when absent' do
         let :title do
@@ -124,9 +122,7 @@ describe 'keymaster::x509::cert::generate', :type => :define do
         let :params do
           {
             :ensure       => 'absent',
-            :country      => 'NZ',
             :commonname   => 'test.example.org',
-            :organization => 'Test Example Organization',
           }
         end
         it { should contain_file('x509_test.example.org_dir').with(

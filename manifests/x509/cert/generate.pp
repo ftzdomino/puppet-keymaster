@@ -1,16 +1,16 @@
 # This generates a host key on the keymaster
 define keymaster::x509::cert::generate(
-  $country,
-  $organization,
   $commonname,
-  $ensure   = 'present',
-  $state    = undef,
-  $locality = undef,
-  $aliases  = [],
-  $email    = undef,
-  $days     = '365',
-  $password = undef,
-  $force    = false,
+  $ensure       = 'present',
+  $country      = undef,
+  $organization = undef,
+  $state        = undef,
+  $locality     = undef,
+  $aliases      = [],
+  $email        = undef,
+  $days         = '365',
+  $password     = undef,
+  $force        = false,
 ) {
 
   include keymaster::params
