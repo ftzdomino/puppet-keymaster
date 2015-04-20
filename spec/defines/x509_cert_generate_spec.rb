@@ -159,7 +159,6 @@ describe 'keymaster::x509::cert::generate', :type => :define do
             :email        => 'test@example.com',
             :days         => '790',
             :password     => 'badbadpassword',
-            :force        => true,
           }
         end
         it { should contain_file('x509_test.example.org_cnf').with_content(

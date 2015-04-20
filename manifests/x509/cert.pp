@@ -2,7 +2,6 @@
 define keymaster::x509::cert (
   $commonname,
   $ensure       = 'present',
-  $selfsign     = true,
   $country      = undef,
   $organization = undef,
   $type         = undef,
@@ -16,14 +15,13 @@ define keymaster::x509::cert (
   $key_path     = undef,
   $owner        = undef,
   $group        = undef,
-  $force        = false,
   $deploy_cert  = true,
   $deploy_key   = true,
 ) {
 
   validate_re($ensure,['^present$','^absent$'])
   if $type {
-    validate_re($type,['pem','cer','crt','der','p12'])
+    validate_re($type,['pem','cer','crt','der','p12','pfx'])
   }
   validate_re(
     $name,
@@ -43,7 +41,6 @@ define keymaster::x509::cert (
     email        => $email,
     days         => $days,
     password     => $password,
-    force        => $force,
     tag          => $name,
   }
 

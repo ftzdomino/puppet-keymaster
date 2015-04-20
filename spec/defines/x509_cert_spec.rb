@@ -25,7 +25,6 @@ describe 'keymaster::x509::cert', :type => :define do
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
           'ensure'       => 'present',
           'commonname'   => 'test.example.org',
-          'force'        => false,
           'days'         => '365',
           'tag'          => 'test.example.org'
         ) }
@@ -75,7 +74,6 @@ describe 'keymaster::x509::cert', :type => :define do
             :email        => 'test@example.com',
             :days         => '790',
             :password     => 'badbadpassword',
-            :force        => true,
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
@@ -83,7 +81,6 @@ describe 'keymaster::x509::cert', :type => :define do
           'country'      => 'NZ',
           'commonname'   => 'test.example.org',
           'organization' => 'Test Example Organization',
-          'force'        => true,
           'days'         => '790',
           'state'        => 'plasma',
           'locality'     => 'above',

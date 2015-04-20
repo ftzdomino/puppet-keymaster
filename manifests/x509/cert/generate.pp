@@ -10,7 +10,6 @@ define keymaster::x509::cert::generate(
   $email        = undef,
   $days         = '365',
   $password     = undef,
-  $force        = false,
 ) {
 
   include keymaster::params
