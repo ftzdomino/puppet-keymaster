@@ -21,11 +21,11 @@ class keymaster::params {
   $group             = 'puppet'
 
   case $::osfamily {
-    Debian:{
+    'Debian':{
       $x509_key_dir  = '/etc/ssl/private'
       $x509_cert_dir = '/etc/ssl/cert'
     }
-    RedHat:{
+    'RedHat':{
       $x509_key_dir  = '/etc/pki/tls/private'
       $x509_cert_dir = '/etc/pki/tls/certs'
     }
