@@ -1,6 +1,6 @@
 {
   "name": "Aethylred-keymaster",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Aethylred",
   "license": "Apache-2.0",
   "summary": "A module for installing and managing keymaster",
@@ -15,7 +15,11 @@
     },
     {
     "operatingsystem":"RedHat",
-    "operatingsystemrelease":[ "5.0", "6.0" ]
+    "operatingsystemrelease":[ "5.0", "6.0", "7.0" ]
+    },
+    {
+    "operatingsystem":"CentOS",
+    "operatingsystemrelease":[ "5.0", "6.0", "7.0" ]
     }
    ],
   "dependencies": [

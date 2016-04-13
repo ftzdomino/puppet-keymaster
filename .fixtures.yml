@@ -6,9 +6,9 @@ fixtures:
   forge_modules:
     stdlib:
       repo: 'puppetlabs/stdlib'
-      ref:  '4.4.0'
+      ref:  '4.6.0'
     ssh:
       repo: 'saz/ssh'
-      ref:  '2.5.0'
+      ref:  '2.8.1'
   symlinks:
     keymaster: "#{source_dir}"
