@@ -29,7 +29,7 @@ define keymaster::x509::cert::pem (
 
   if $ensure == 'present' {
     exec { "convert_${name}_to_pem":
-      command => "openssl x509 -inform der -in ${cert_in_file} -out ${cert_out_file}",
+      command => "openssl x509 -in ${cert_in_file} -out ${cert_out_file}",
       creates => $cert_out_file,
       before  => File["x509_${name}_pem"],
     }

@@ -1,6 +1,6 @@
 {
   "name": "Aethylred-keymaster",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Aethylred",
   "license": "Apache-2.0",
   "summary": "A module for installing and managing keymaster",

@@ -25,7 +25,7 @@ describe 'keymaster::x509::cert::pem', :type => :define do
           'mode'   => '0640'
         ) }
         it { should contain_exec('convert_test.example.org_to_pem').with(
-          'command' => 'openssl x509 -inform der -in /var/lib/keymaster/x509/test.example.org/certificate.crt -out /var/lib/keymaster/x509/test.example.org/certificate.pem',
+          'command' => 'openssl x509 -in /var/lib/keymaster/x509/test.example.org/certificate.crt -out /var/lib/keymaster/x509/test.example.org/certificate.pem',
           'creates' => '/var/lib/keymaster/x509/test.example.org/certificate.pem',
           'user'    => 'puppet',
           'before'  => 'File[x509_test.example.org_pem]',
