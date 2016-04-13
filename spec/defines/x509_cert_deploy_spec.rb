@@ -60,7 +60,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
           'nowhere.com'
         end
         it { should_not contain_file('x509_nowhere.com_certificate') }
-        it { should contain_notify('x509_nowhere.com_did_not_run').with_message("Can't read certificate /var/lib/keymaster/x509/nowhere.com/certificate.crt")}
+        it { should contain_notify('x509_nowhere.com_cert_did_not_run').with_message("Can't read certificate /var/lib/keymaster/x509/nowhere.com/certificate.crt")}
       end
       describe 'when deploying a DER cer certificate' do
         let :title do

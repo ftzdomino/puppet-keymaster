@@ -31,7 +31,7 @@ define keymaster::x509::key::deploy(
   }
 
   if ! $key_content {
-    notify{"x509_${name}_did_not_run":
+    notify{"x509_${name}_key_did_not_run":
       message => "Can't read key ${key_file}",
     }
   } else {

@@ -57,7 +57,7 @@ define keymaster::x509::cert::deploy(
   }
   
   if ! $cert_content {
-    notify{"x509_${name}_did_not_run":
+    notify{"x509_${name}_cert_did_not_run":
       message => "Can't read certificate ${cert_file}",
     }
   } else {

@@ -60,7 +60,7 @@ describe 'keymaster::x509::key::deploy', :type => :define do
           'nowhere.com'
         end
         it { should_not contain_file('x509_nowhere.com_certificate') }
-        it { should contain_notify('x509_nowhere.com_did_not_run').with_message("Can't read key /var/lib/keymaster/x509/nowhere.com/key.pem")}
+        it { should contain_notify('x509_nowhere.com_key_did_not_run').with_message("Can't read key /var/lib/keymaster/x509/nowhere.com/key.pem")}
       end
     end
   end
