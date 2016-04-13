@@ -6,7 +6,7 @@ describe 'keymaster::x509::key::deploy', :type => :define do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
-        :fqdn                   => 'test.example.org',
+        :fqdn                   => 'test.example.org'
       }
     end
     describe 'with default keymaster and preseeded key' do
@@ -22,7 +22,7 @@ describe 'keymaster::x509::key::deploy', :type => :define do
           'path'    => '/etc/ssl/private/test.example.org.pem',
           'owner'   => nil,
           'group'   => nil,
-          'content' => %r{^-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----$},
+          'content' => %r{^-----BEGIN RSA PRIVATE KEY-----THISISAFAKERSAHASH-----END RSA PRIVATE KEY-----$}
         ) }
       end
       describe 'when absent' do
@@ -35,7 +35,7 @@ describe 'keymaster::x509::key::deploy', :type => :define do
           }
         end
         it { should contain_file('x509_test.example.org_private_key').with(
-          'ensure'  => 'absent',
+          'ensure'  => 'absent'
         ) }
       end
       describe 'with using parameters' do
@@ -46,13 +46,13 @@ describe 'keymaster::x509::key::deploy', :type => :define do
           {
             :path  => '/some/other/key.foo',
             :owner => 'nobody',
-            :group => 'nobody',
+            :group => 'nobody'
           }
         end
         it { should contain_file('x509_test.example.org_private_key').with(
           'path'    => '/some/other/key.foo',
           'owner'   => 'nobody',
-          'group'   => 'nobody',
+          'group'   => 'nobody'
         ) }
       end
       describe 'when deploying a certificate that does not exist' do

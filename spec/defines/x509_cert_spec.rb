@@ -6,7 +6,7 @@ describe 'keymaster::x509::cert', :type => :define do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
-        :fqdn                   => 'test.example.org',
+        :fqdn                   => 'test.example.org'
       }
     end
     describe 'with default keymaster and realising stored resources' do
@@ -19,7 +19,7 @@ describe 'keymaster::x509::cert', :type => :define do
         end
         let :params do
           {
-            :commonname   => 'test.example.org',
+            :commonname   => 'test.example.org'
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
@@ -38,7 +38,7 @@ describe 'keymaster::x509::cert', :type => :define do
           'owner'       => nil,
           'group'       => nil,
           'deploy_cert' => true,
-          'deploy_key'  => true,
+          'deploy_key'  => true
         ) }
       end
       describe 'when absent' do
@@ -48,14 +48,14 @@ describe 'keymaster::x509::cert', :type => :define do
         let :params do
           {
             :ensure       => 'absent',
-            :commonname   => 'test.example.org',
+            :commonname   => 'test.example.org'
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should contain_keymaster__x509__deploy('test.example.org').with(
-          'ensure'      => 'absent',
+          'ensure'      => 'absent'
         ) }
       end
       describe 'customising certificate generation and content' do
@@ -73,7 +73,7 @@ describe 'keymaster::x509::cert', :type => :define do
             :aliases      => ['first','second','third'],
             :email        => 'test@example.com',
             :days         => '790',
-            :password     => 'badbadpassword',
+            :password     => 'badbadpassword'
           }
         end
         it { should contain_keymaster__x509__cert__generate('test.example.org').with(
@@ -102,13 +102,13 @@ describe 'keymaster::x509::cert', :type => :define do
           :ensure       => 'present',
           :commonname   => 'test.example.org',
           :deploy_cert  => true,
-          :deploy_key   => false,
+          :deploy_key   => false
         }
       end
       it { should contain_keymaster__x509__deploy('test.example.org').with(
         'ensure'      => 'present',
         'deploy_cert' => true,
-        'deploy_key'  => false,
+        'deploy_key'  => false
       ) }
     end
     describe 'when only deploying the private key' do
@@ -120,13 +120,13 @@ describe 'keymaster::x509::cert', :type => :define do
           :ensure       => 'present',
           :commonname   => 'test.example.org',
           :deploy_cert  => false,
-          :deploy_key   => true,
+          :deploy_key   => true
         }
       end
       it { should contain_keymaster__x509__deploy('test.example.org').with(
         'ensure'      => 'present',
         'deploy_cert' => false,
-        'deploy_key'  => true,
+        'deploy_key'  => true
       ) }
     end
     describe 'when not deploying key or certificate' do
@@ -138,7 +138,7 @@ describe 'keymaster::x509::cert', :type => :define do
           :ensure       => 'present',
           :commonname   => 'test.example.org',
           :deploy_cert  => false,
-          :deploy_key   => false,
+          :deploy_key   => false
         }
       end
       it { should_not contain_keymaster__x509__deploy('test.example.org') }
@@ -166,7 +166,7 @@ describe 'keymaster::x509::cert', :type => :define do
           'owner'       => 'nobody',
           'group'       => 'nobody',
           'deploy_cert' => true,
-          'deploy_key'  => true,
+          'deploy_key'  => true
         ) }
     end
   end

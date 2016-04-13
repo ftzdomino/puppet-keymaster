@@ -27,35 +27,35 @@ describe 'keymaster::x509::cert::generate', :type => :define do
           'path'   => '/var/lib/keymaster/x509/test.example.org',
           'mode'   => '0755',
           'owner'  => 'puppet',
-          'group'  => 'puppet',
+          'group'  => 'puppet'
         ) }
         it { should contain_file('x509_test.example.org_cnf').with(
           'ensure' => 'file',
           'path'   => '/var/lib/keymaster/x509/test.example.org/config.cnf',
           'mode'   => '0640',
           'owner'  => 'puppet',
-          'group'  => 'puppet',
+          'group'  => 'puppet'
         ) }
         it { should contain_file('x509_test.example.org_key').with(
           'ensure' => 'file',
           'path'   => '/var/lib/keymaster/x509/test.example.org/key.pem',
           'mode'   => '0640',
           'owner'  => 'puppet',
-          'group'  => 'puppet',
+          'group'  => 'puppet'
         ) }
         it { should contain_file('x509_test.example.org_csr').with(
           'ensure' => 'file',
           'path'   => '/var/lib/keymaster/x509/test.example.org/request.csr',
           'mode'   => '0640',
           'owner'  => 'puppet',
-          'group'  => 'puppet',
+          'group'  => 'puppet'
         ) }
         it { should contain_file('x509_test.example.org_crt').with(
           'ensure' => 'file',
           'path'   => '/var/lib/keymaster/x509/test.example.org/certificate.crt',
           'mode'   => '0640',
           'owner'  => 'puppet',
-          'group'  => 'puppet',
+          'group'  => 'puppet'
         ) }
         it { should contain_exec('x509_test.example.org_key').with(
           'path'    => '/usr/bin:/usr/sbin:/bin:/sbin',
@@ -64,7 +64,7 @@ describe 'keymaster::x509::cert::generate', :type => :define do
           'group'   => 'puppet',
           'creates' => '/var/lib/keymaster/x509/test.example.org/key.pem',
           'require' => 'File[x509_test.example.org_cnf]',
-          'before'  => 'File[x509_test.example.org_key]',
+          'before'  => 'File[x509_test.example.org_key]'
         ) }
         it { should contain_exec('x509_test.example.org_csr').with(
           'path'    => '/usr/bin:/usr/sbin:/bin:/sbin',
@@ -73,7 +73,7 @@ describe 'keymaster::x509::cert::generate', :type => :define do
           'group'   => 'puppet',
           'creates' => '/var/lib/keymaster/x509/test.example.org/request.csr',
           'require' => 'File[x509_test.example.org_key]',
-          'before'  => 'File[x509_test.example.org_csr]',
+          'before'  => 'File[x509_test.example.org_csr]'
         ) }
         it { should contain_exec('x509_test.example.org_crt').with(
           'path'    => '/usr/bin:/usr/sbin:/bin:/sbin',
@@ -82,7 +82,7 @@ describe 'keymaster::x509::cert::generate', :type => :define do
           'group'   => 'puppet',
           'creates' => '/var/lib/keymaster/x509/test.example.org/certificate.crt',
           'require' => 'File[x509_test.example.org_csr]',
-          'before'  => 'File[x509_test.example.org_crt]',
+          'before'  => 'File[x509_test.example.org_crt]'
         ) }
         it { should contain_file('x509_test.example.org_cnf').with_content(
           %r{^default_keyfile    = /var/lib/keymaster/x509/test.example.org/key.pem$}
@@ -126,19 +126,19 @@ describe 'keymaster::x509::cert::generate', :type => :define do
           }
         end
         it { should contain_file('x509_test.example.org_dir').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should contain_file('x509_test.example.org_cnf').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should contain_file('x509_test.example.org_key').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should contain_file('x509_test.example.org_csr').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should contain_file('x509_test.example.org_crt').with(
-          'ensure' => 'absent',
+          'ensure' => 'absent'
         ) }
         it { should_not contain_exec('x509_test.example.org_key') }
         it { should_not contain_exec('x509_test.example.org_csr') }

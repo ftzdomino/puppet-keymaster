@@ -22,7 +22,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
           'path'    => '/etc/ssl/cert/test.example.org.crt',
           'owner'   => nil,
           'group'   => nil,
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$}
         ) }
       end
       describe 'when absent' do
@@ -35,7 +35,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
           }
         end
         it { should contain_file('x509_test.example.org_certificate').with(
-          'ensure'  => 'absent',
+          'ensure'  => 'absent'
         ) }
       end
       describe 'with using parameters' do
@@ -46,13 +46,13 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
           {
             :path  => '/some/other/certificate.foo',
             :owner => 'nobody',
-            :group => 'nobody',
+            :group => 'nobody'
           }
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/some/other/certificate.foo',
           'owner'   => 'nobody',
-          'group'   => 'nobody',
+          'group'   => 'nobody'
         ) }
       end
       describe 'when deploying a certificate that does not exist' do
@@ -73,7 +73,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/etc/ssl/cert/test.example.org.cer',
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$}
         ) }
       end
       describe 'when deploying a DER der certificate' do
@@ -87,7 +87,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/etc/ssl/cert/test.example.org.der',
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEHASH-----END CERTIFICATE-----$}
         ) }
       end
       describe 'when deploying a pkcs12 p12 certificate' do
@@ -101,7 +101,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/etc/ssl/cert/test.example.org.p12',
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEP12-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEP12-----END CERTIFICATE-----$}
         ) }
         it { should contain_keymaster__x509__cert__p12('test.example.org').with_type('p12') }
       end
@@ -116,7 +116,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/etc/ssl/cert/test.example.org.pfx',
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEPFX-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEPFX-----END CERTIFICATE-----$}
         ) }
         it { should contain_keymaster__x509__cert__p12('test.example.org').with_type('pfx') }
       end
@@ -131,7 +131,7 @@ describe 'keymaster::x509::cert::deploy', :type => :define do
         end
         it { should contain_file('x509_test.example.org_certificate').with(
           'path'    => '/etc/ssl/cert/test.example.org.pem',
-          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEPEM-----END CERTIFICATE-----$},
+          'content' => %r{^-----BEGIN CERTIFICATE-----THISISAFAKEPEM-----END CERTIFICATE-----$}
         ) }
         it { should contain_keymaster__x509__cert__pem('test.example.org') }
       end

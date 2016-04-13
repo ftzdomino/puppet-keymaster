@@ -6,7 +6,7 @@ describe 'keymaster::x509::cert::pem', :type => :define do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
-        :fqdn                   => 'test.example.org',
+        :fqdn                   => 'test.example.org'
       }
     end
     describe 'with default keymaster and realising stored resources' do
@@ -22,7 +22,7 @@ describe 'keymaster::x509::cert::pem', :type => :define do
           'path'   => '/var/lib/keymaster/x509/test.example.org/certificate.pem',
           'owner'  => 'puppet',
           'group'  => 'puppet',
-          'mode'   => '0640',
+          'mode'   => '0640'
         ) }
         it { should contain_exec('convert_test.example.org_to_pem').with(
           'command' => 'openssl x509 -inform der -in /var/lib/keymaster/x509/test.example.org/certificate.crt -out /var/lib/keymaster/x509/test.example.org/certificate.pem',

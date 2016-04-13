@@ -22,7 +22,7 @@ describe 'keymaster::x509::cert::p12', :type => :define do
           'path'   => '/var/lib/keymaster/x509/test.example.org/certificate.p12',
           'owner'  => 'puppet',
           'group'  => 'puppet',
-          'mode'   => '0640',
+          'mode'   => '0640'
         ) }
         it { should contain_exec('convert_test.example.org_to_p12').with(
           'command' => 'openssl pkcs12 -export -out /var/lib/keymaster/x509/test.example.org/certificate.p12 -in /var/lib/keymaster/x509/test.example.org/certificate.crt -inkey /var/lib/keymaster/x509/test.example.org/key.pem',
@@ -46,7 +46,7 @@ describe 'keymaster::x509::cert::p12', :type => :define do
           'path'   => '/var/lib/keymaster/x509/test.example.org/certificate.pfx',
           'owner'  => 'puppet',
           'group'  => 'puppet',
-          'mode'   => '0640',
+          'mode'   => '0640'
         ) }
         it { should contain_exec('convert_test.example.org_to_p12').with(
           'command' => 'openssl pkcs12 -export -out /var/lib/keymaster/x509/test.example.org/certificate.pfx -in /var/lib/keymaster/x509/test.example.org/certificate.crt -inkey /var/lib/keymaster/x509/test.example.org/key.pem',
