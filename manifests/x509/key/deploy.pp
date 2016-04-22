@@ -6,6 +6,8 @@ define keymaster::x509::key::deploy(
   $group  = undef
 ) {
 
+  include ::keymaster::params
+
   validate_re($ensure,['^present$','^absent$'])
 
   case $ensure {

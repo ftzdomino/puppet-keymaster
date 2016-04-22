@@ -4,6 +4,8 @@ define keymaster::x509::cert::p12 (
   $type   = 'p12'
 ) {
 
+  include ::keymaster::params
+
   validate_re($type,['p12','pfx'])
 
   case $ensure {

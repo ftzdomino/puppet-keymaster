@@ -3,6 +3,8 @@ define keymaster::x509::cert::pem (
   $ensure = 'present'
 ) {
 
+  include ::keymaster::params
+
   case $ensure {
     'present': {
       $file_ensure = 'file'

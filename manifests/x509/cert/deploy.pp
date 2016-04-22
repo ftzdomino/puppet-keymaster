@@ -7,6 +7,8 @@ define keymaster::x509::cert::deploy(
   $group  = undef
 ) {
 
+  include ::keymaster::params
+
   validate_re($ensure,['^present$','^absent$'])
 
   if $type {
