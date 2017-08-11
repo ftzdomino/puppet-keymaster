@@ -48,6 +48,7 @@ define keymaster::openssh::key (
 
   # generate exported resources for the ssh client host to realize
   @@keymaster::openssh::key::deploy { $name:
+    user     => $name,
     ensure   => $ensure,
     filename => $real_filename,
     tag      => $clean_tag,
@@ -55,6 +56,7 @@ define keymaster::openssh::key (
 
   # generate exported resources for the ssh server host to realize
   @@keymaster::openssh::key::authorized_key { $name:
+    user     => $name,
     ensure  => $ensure,
     options => $options,
     tag     => $clean_tag,
